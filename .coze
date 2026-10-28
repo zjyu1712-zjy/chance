@@ -1,0 +1,20 @@
+[project]
+name = "Chance 蒙牛新品机会智能体公开网页"
+project_type = "web"
+requires = ["nodejs-22"]
+version = "1.0.0"
+
+[preview]
+preview_enable = "enabled"
+
+[dev]
+build = ["bash", "scripts/build.sh"]
+run = ["bash", "scripts/run.sh"]
+
+[deploy]
+build = ["bash", "scripts/build.sh"]
+run = ["bash", "scripts/run.sh"]
+
+[deploy.profile]
+kind = "service"
+flavor = "web"

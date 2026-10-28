@@ -1,0 +1,155 @@
+{
+  "publication_date": "2026-10-28",
+  "repository": "https://github.com/zjyu1712-zjy/chance",
+  "scope": "既有网页源码与三个案例成果归档；不含原扣子Agent后端完整工程或凭证",
+  "original_web_and_case_files_unchanged": true,
+  "versions": {
+    "T-016": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "T-017": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "T-018": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ]
+  },
+  "model_calls": 0,
+  "checks": {
+    "local_test": "passed",
+    "build": "passed",
+    "pdf_readable_pages": 8,
+    "docx_zip_integrity": "passed",
+    "docx_screenshot_count": 3,
+    "sensitive_patterns_found": 0,
+    "website_health_http_status": 200
+  },
+  "files": [
+    {
+      "path": ".coze",
+      "bytes": 375,
+      "sha256": "2ec0c55e501a69ea4a526e95a4d96b1668c419c0265a0d949d6b23bb2cf016fd"
+    },
+    {
+      "path": ".env.example",
+      "bytes": 237,
+      "sha256": "9e44efc13686b4d6271c8716193a11a08ac545cd20274df8baa34ea111aeaa85"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 116,
+      "sha256": "4ffd230cb6b5ec8283b458332f9b0b0ce555b3c4d2040eca42052e06e806c936"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 867,
+      "sha256": "74a48e9c577cfabf470fc6d7442c833f7ffd3dde6d4fff466ab83daf414e0f4b"
+    },
+    {
+      "path": "README.md",
+      "bytes": 4126,
+      "sha256": "fa5a340f024ffde3cf31e7a051c00cf301ba69e39732ba7ec650de17257a6f68"
+    },
+    {
+      "path": "docs/cases/三案例最终结果_含最终机会卡截图.docx",
+      "bytes": 610974,
+      "sha256": "9ad990a5b938344b0d327cd9fee68f330101d412e693caca22dc24facb22b3d1"
+    },
+    {
+      "path": "docs/cases/三案例最终结果_含最终机会卡截图.pdf",
+      "bytes": 1421836,
+      "sha256": "c62540406b316697a2428cd384bae7d8b8bb5f66727d8c984340e50a11e02bec"
+    },
+    {
+      "path": "docs/images/T-016-OC-001-v4.jpg",
+      "bytes": 140630,
+      "sha256": "b874f4bc65cafddbe8538fe0aec1004274e5ee662d641a64d89833984eaf7abf"
+    },
+    {
+      "path": "docs/images/T-017-OC-001-v5.jpg",
+      "bytes": 297750,
+      "sha256": "0d0bc705055287a79e4645deb1f10f419bdbdff7b9a57f6a218978b78c759288"
+    },
+    {
+      "path": "docs/images/T-018-OC-001-v5.jpg",
+      "bytes": 168475,
+      "sha256": "456829aeb77227ea6eda23c6ead41d37739533c458a2ce83a4fbb108d9b8ce6a"
+    },
+    {
+      "path": "docs/images/public-website-qr.png",
+      "bytes": 8467,
+      "sha256": "df3c576d36694c7923860f26447c0e1ac1363ee25347b9b41c92c216ff33027f"
+    },
+    {
+      "path": "docs/images/public-website.png",
+      "bytes": 87693,
+      "sha256": "2cd60081331f90d8ba4f4085194b235db3e20e3368c3d182f6df421de77ff5ef"
+    },
+    {
+      "path": "docs/verification/deployment-checks-20261015.json",
+      "bytes": 3155,
+      "sha256": "d36f3599b9584b5f8d1bafb58eb327e977e3343d697b8201f084f3047316323d"
+    },
+    {
+      "path": "docs/材料与核查说明.md",
+      "bytes": 2361,
+      "sha256": "633064d0af6d12555930351d3995b8f3234b91001b4d674a6b396d99ad5b7d23"
+    },
+    {
+      "path": "docs/部署说明.md",
+      "bytes": 2236,
+      "sha256": "14db19560f214eb65ffa1a848221d4752b490bf50319cde57741542991bb66cd"
+    },
+    {
+      "path": "package.json",
+      "bytes": 269,
+      "sha256": "d8764ca42e3c976cfe01dc7c1a7ba2cd6f8e525e8349bd054bc4025ea49479df"
+    },
+    {
+      "path": "public/application.html",
+      "bytes": 71580,
+      "sha256": "f2011d073665f158cc654c51797158684b8353bc8898c1abce87b1e063ea421c"
+    },
+    {
+      "path": "public/cases.json",
+      "bytes": 3190629,
+      "sha256": "e2cd9678fb4df3807b8e5a01faeb10d868c483281a97e08a52e1b46edafbdd71"
+    },
+    {
+      "path": "public/favicon.svg",
+      "bytes": 712,
+      "sha256": "e6d2e59b7b5bbb0342e0fb496dfc262decbfe4426bbb7b047aec8d467d1dc6f7"
+    },
+    {
+      "path": "scripts/build.sh",
+      "bytes": 86,
+      "sha256": "916f69bde00f7ed3fc2d3b7973fbd16ebd0eeda70de4fff8b2e6e97741bdf57b"
+    },
+    {
+      "path": "scripts/run.sh",
+      "bytes": 131,
+      "sha256": "46deb8abcc3f0c68e6592526c88b156947d817f2c3a4b03a811b7b68dc5bac02"
+    },
+    {
+      "path": "server.mjs",
+      "bytes": 5593,
+      "sha256": "ab08f840faee3a0960e9bc67fc23d316604258f54fda32181b0dbbf342a54205"
+    },
+    {
+      "path": "server.test.mjs",
+      "bytes": 3180,
+      "sha256": "403129a135c9109cb69291b9c0c2dc532b66e462007614ef0b0eb2d8be6a77dc"
+    }
+  ]
+}

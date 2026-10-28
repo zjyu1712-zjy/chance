@@ -1,0 +1,8 @@
+{
+  "name":"mengniu-opportunity-public-web",
+  "version":"1.0.0",
+  "private":true,
+  "type":"module",
+  "engines":{"node":">=20"},
+  "scripts":{"dev":"node server.mjs","start":"node server.mjs","build":"node --check server.mjs","test":"node --test server.test.mjs"}
+}

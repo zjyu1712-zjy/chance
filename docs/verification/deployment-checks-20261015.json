@@ -1,0 +1,122 @@
+{
+  "url": "https://mengniu-opportunity.coze.site",
+  "model_calls": 0,
+  "health": {
+    "ready": true,
+    "storage": "isolated PostgreSQL visitor table",
+    "rules_version": "v1.4",
+    "rules_sha256": "bb7604b90c6fd78cc454ee02daba4268124f8bfd58fb0edcaf1417986481beae",
+    "materials": {
+      "来源数": 9,
+      "产品/替代记录数": 9,
+      "资料核查日期": "2026-10-02",
+      "打包日期": "2026-10-11",
+      "来源": [
+        "S01",
+        "S02",
+        "S03",
+        "S04",
+        "S05",
+        "S06",
+        "S07",
+        "S08",
+        "S09"
+      ],
+      "产品": [
+        "P01",
+        "P02",
+        "P03",
+        "P04",
+        "P05",
+        "P06",
+        "P07",
+        "P08",
+        "P09"
+      ]
+    },
+    "model_called": false
+  },
+  "checks": [
+    {
+      "check": "生产分析入口和独立数据库就绪，不调用模型",
+      "passed": true
+    },
+    {
+      "check": "匿名访客 A 初始任务为空",
+      "passed": true
+    },
+    {
+      "check": "生产端成功创建独立访客任务",
+      "passed": true
+    },
+    {
+      "check": "模拟自测资料保存成功",
+      "passed": true
+    },
+    {
+      "check": "重新请求可恢复原输入",
+      "passed": true
+    },
+    {
+      "check": "访客 B 无法读取 A 的任务",
+      "passed": true
+    },
+    {
+      "check": "访客不能激活归档任务",
+      "passed": true
+    },
+    {
+      "check": "新任务隔离旧输入",
+      "passed": true
+    },
+    {
+      "check": "仍可恢复自己的旧任务与输入",
+      "passed": true
+    },
+    {
+      "check": "T-016 最终版本与原始存档逐字段一致",
+      "passed": true
+    },
+    {
+      "check": "T-016 全部历史版本保留",
+      "passed": true
+    },
+    {
+      "check": "T-017 最终版本与原始存档逐字段一致",
+      "passed": true
+    },
+    {
+      "check": "T-017 全部历史版本保留",
+      "passed": true
+    },
+    {
+      "check": "T-018 最终版本与原始存档逐字段一致",
+      "passed": true
+    },
+    {
+      "check": "T-018 全部历史版本保留",
+      "passed": true
+    }
+  ],
+  "test_scope": "仅独立匿名访客内的模拟输入，未执行 analyze；未访问原案例写接口",
+  "browser_checks": {
+    "四种模式可选择": true,
+    "三个最终版可打开且只读": true,
+    "案例三历史5版可读取": true,
+    "独立模拟任务创建与登记输入": true,
+    "刷新后可通过我的试用任务恢复": true,
+    "导出本任务显示成功": true
+  },
+  "deployment": {
+    "project_id": "7696501130855137314",
+    "commit": "efc7fa6f44",
+    "history_id": "7696599784173584424",
+    "public_url": "https://mengniu-opportunity.coze.site/",
+    "qr_decoded_url": "https://mengniu-opportunity.coze.site/"
+  },
+  "limits": [
+    "未调用业务模型，未验证新的分析输出或机会卡生成；复用原有已部署分析服务。",
+    "访客以浏览器Cookie识别，换浏览器或清除Cookie后不能自动恢复；可使用导出保存。",
+    "新域名采用独立访客命名空间，旧Sites访客任务不自动迁入。"
+  ]
+}
