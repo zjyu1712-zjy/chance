@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>蒙牛新品机会智能体 · 预览</title>
+<style>
+  :root{
+    --brand:#c8102e; --brand2:#7f0d20; --ink:#1c1c1c; --mut:#6b6b6b;
+    --line:#e6e6e6; --bg:#f7f7f8; --panel:#ffffff; --ok:#15803d; --warn:#b45309;
+    --bad:#b91c1c; --unk:#2563eb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.6}
+  header{background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;padding:16px 28px;display:flex;justify-content:space-between;align-items:center}
+  header h1{margin:0;font-size:20px;font-weight:700}
+  header .sub{opacity:.9;font-size:12.5px;margin-top:2px}
+  header .verify{background:rgba(255,255,255,.16);padding:6px 12px;border-radius:20px;font-size:12.5px}
+  .container{max-width:1180px;margin:0 auto;padding:24px 20px 60px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .card h2{margin:0 0 14px;font-size:17px;display:flex;align-items:center;gap:8px}
+  .card h2 .tag{font-size:11px;font-weight:600;padding:2px 8px;border-radius:10px;background:#f1f1f3;color:var(--mut)}
+  .card h3{font-size:14px;margin:16px 0 8px}
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+  .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+  .entry{cursor:pointer;border:2px solid var(--line);border-radius:12px;padding:14px;text-align:center;transition:.15s;background:#fff}
+  .entry:hover{border-color:var(--brand)}
+  .entry.active{border-color:var(--brand);background:#fff5f6;box-shadow:0 0 0 1px var(--brand)}
+  .entry .ico{font-size:26px}
+  .entry .nm{font-weight:700;margin-top:6px}
+  .entry .ds{font-size:11.5px;color:var(--mut);margin-top:4px}
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:10px 0}
+  label{font-size:12.5px;color:var(--mut);display:block;margin-bottom:4px}
+  input[type=text],textarea,select{width:100%;padding:9px 11px;border:1px solid var(--line);border-radius:8px;font-size:13.5px;font-family:inherit}
+  textarea{min-height:90px;resize:vertical}
+  button{border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;cursor:pointer;font-weight:600;transition:.15s}
+  .btn-brand{background:var(--brand);color:#fff}
+  .btn-brand:hover{background:var(--brand2)}
+  .btn-ghost{background:#eee;color:var(--ink)}
+  .btn-ghost:hover{background:#e0e0e0}
+  .btn-line{background:#fff;border:1px solid var(--line);color:var(--ink)}
+  .btn-line:hover{border-color:var(--brand);color:var(--brand)}
+  .btn:disabled{opacity:.5;cursor:not-allowed}
+  .badge{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11.5px;font-weight:700}
+  .st-未开始{background:#ececec;color:#555}
+  .st-进行中{background:#fff7e0;color:var(--warn)}
+  .st-已完成{background:#e3f6e8;color:var(--ok)}
+  .st-缺资料{background:#fff0e0;color:var(--warn)}
+  .st-执行失败{background:#fde6e6;color:var(--bad)}
+  .scope--非模拟资料{background:#e3f6e8;color:var(--ok)}
+  .scope--仅模拟{background:#fde6e6;color:var(--bad)}
+  .flow{display:flex;flex-direction:column;gap:8px}
+  .flow-step{border:1px solid var(--line);border-radius:11px;overflow:hidden}
+  .flow-head{display:flex;justify-content:space-between;align-items:center;padding:11px 15px;cursor:pointer;background:#fff}
+  .flow-head:hover{background:#fafafa}
+  .flow-left{display:flex;align-items:center;gap:10px}
+  .flow-num{width:24px;height:24px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700}
+  .flow-body{border-top:1px solid var(--line);padding:14px 16px;background:#fcfcfd;display:none}
+  .flow-step.open .flow-body{display:block}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  .supply-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .supply-table-wrap table{min-width:880px}
+  th{background:#f5f5f6;font-weight:600}
+  .kv{display:grid;grid-template-columns:130px 1fr;gap:6px 12px;font-size:13px}
+  .kv b{color:var(--mut);font-weight:600}
+  .empty{color:var(--mut);font-style:italic}
+  .muted{color:var(--mut)}
+  .sim-flag{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:700;background:#fde6e6;color:var(--bad)}
+  .real-flag{display:inline-block;padding:2px 9px;border-radius:10px;font-size:11px;font-weight:700;background:#e3f6e8;color:var(--ok)}
+  pre.ai{background:#f6f6f8;border:1px solid var(--line);border-radius:10px;padding:12px;white-space:pre-wrap;font-size:12.5px}
+  .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;opacity:0;transition:.25s;z-index:50;max-width:80vw}
+  .toast.show{opacity:.95}
+  .cv{background:#fffdf5;border:1px solid #f0e2b6;border-radius:10px;padding:10px 14px;font-size:12.5px;color:#5a4d1f}
+  .loader{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:6px}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .progress{font-size:12px;color:var(--mut)}
+  .step-line{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mut);flex-wrap:wrap}
+  .dot{width:8px;height:8px;border-radius:50%;background:#ccc}
+  .dot.done{background:var(--ok)}.dot.gap{background:var(--warn)}.dot.now{background:var(--brand)}
+  .ver{border:1px solid var(--line);border-radius:11px;padding:11px 14px;margin-bottom:10px;background:#fff}
+  .ver-head{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .diff{margin-top:8px;font-size:12.5px}
+  .chg{padding:3px 0;border-bottom:1px dashed #eee}
+  .old{color:var(--bad);text-decoration:line-through}
+  .new{color:var(--ok)}
+.t018-scroll{overflow-x:auto;max-width:100%;margin:10px 0}.t018-scroll table{min-width:720px;table-layout:auto}.t018-scroll th,.t018-scroll td{min-width:130px;word-break:normal;overflow-wrap:anywhere}.t018-scroll th:first-child{min-width:160px}
+@media(max-width:700px){.t018-result .kv{grid-template-columns:1fr;gap:6px}.t018-result .kv>b{margin-top:10px}.t018-result p,.t018-result li{line-height:1.7}.t018-scroll{border:1px solid #ddd}.t018-scroll table{margin:0}}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>🥛 蒙牛新品机会智能体</h1>
+    <div class="sub">基于多源信息的新品机会智能识别与分析</div>
+    <div class="cv" style="max-width:900px;margin-top:6px"><b>核心价值：</b>智能体不以尽可能多地生成新品概念为目标，而是将模糊线索转化为可核查的研究问题，并尝试降低重复创新与证据不足所带来的决策风险。<br><span class="muted">参赛研究原型 · 非蒙牛官方产品 · 面向大学生AI创新比赛演示</span></div>
+  </div>
+  <div class="verify">材料核验日期：<b>2026-10-02</b></div>
+</header>
+
+<div class="container">
+
+  <!-- 四入口 -->
+  <div class="card">
+    <h2>① 选择入口（四种入口进入同一判断流程）<span class="tag">入口</span></h2>
+    <div class="grid4" id="modeGrid"></div>
+    <div class="row">
+      <label style="flex:0 0 auto;margin:0">判断范围：</label>
+      <select id="scopeSel" style="width:auto">
+        <option value="非模拟资料" selected>非模拟资料（真实研究）</option>
+        <option value="仅模拟">仅模拟（合成/假设测试）</option>
+      </select>
+      <button class="btn-brand" id="btnStart">＋ 开始新任务</button>
+      <button class="btn-ghost" id="btnRefresh">刷新</button>
+    </div>
+    <div class="cv">真实研究、企业构想与模拟演示会分开标记。模拟测试会由程序锁定为“仅模拟”，不会污染真实业务任务。</div>
+  </div>
+
+  <!-- 输入 / 运行 -->
+  <div class="card">
+    <h2>② 登记原始入力并运行五阶段分析</h2>
+    <div class="grid">
+      <div>
+        <label>原始输入（评论 / 热点 / 构想 / 市场信息）</label>
+        <textarea id="rawInput" placeholder="例如：有用户反馈蒙牛纯甄跳跳糖馋酸奶偏甜，但喜欢扁桃仁跳跳糖的香脆咀嚼口感，希望保留坚果脆口感同时降甜……"></textarea>
+      </div>
+      <div>
+        <label>资料性质</label>
+        <select id="kindSel">
+          <option value="user_unverified">用户未核验陈述（消费者反馈）</option>
+          <option value="simulation">合成 / 模拟测试材料</option>
+          <option value="enterprise_concept">企业构想（非消费者证据）</option>
+          <option value="research">研究报告</option>
+          <option value="brand">品牌介绍</option>
+          <option value="market">市场信息</option>
+        </select>
+        <label>用户来源 / 链接（可选）</label>
+        <input type="text" id="userRef" placeholder="例如：微博评论 / 问卷 / 竞品页面链接" />
+      </div>
+    </div>
+    <div class="row">
+      <button class="btn-ghost" id="btnInput">登记输入</button>
+      <button class="btn-brand" id="btnAnalyze">▶ 运行五阶段分析（真实模型执行）</button>
+      <button class="btn-line" id="btnExport">导出本任务（txt）</button>
+      <span class="progress" id="prog"></span>
+    </div>
+    <div id="lastAi" style="display:none"></div>
+  </div>
+
+  <!-- 任务区 -->
+  <div class="card" id="taskCard">
+    <h2>任务区</h2>
+    <div class="muted" id="taskNone">尚未开始任务。请先在上方选择入口并点击「开始新任务」。</div>
+    <div id="taskBody" style="display:none"></div>
+  </div>
+
+  <!-- 流程区 -->
+  <div class="card" id="flowCard" style="display:none">
+    <h2>流程区：候选假设 → 需求核对 → 产品对照 → 验证价值 → 形成研究建议</h2>
+    <div class="step-line" id="stepLine"></div>
+    <div class="flow" id="flow" style="margin-top:14px"></div>
+  </div>
+
+  <!-- 候选假设列表 -->
+  <div class="card" id="hypCard" style="display:none">
+    <h2>候选假设列表</h2>
+    <div id="hypList"></div>
+  </div>
+
+  <!-- 最终结果卡 -->
+  <div class="card" id="resultCard" style="display:none">
+    <h2>④ 分析结果区·最终结果卡 <span class="tag" id="resultTag"></span></h2>
+    <div id="resultBody"></div>
+  </div>
+
+  <!-- 结果操作区 -->
+  <div class="card" id="opsCard" style="display:none">
+    <h2>⑤ 结果操作区 <span class="tag">多轮更新 / 历史 / 导出</span></h2>
+    <div class="cv">第二轮及以后：在下方“分析输入区”粘贴本轮<b>新增</b>材料，点「补充资料并更新」。程序会在<b>同一任务</b>中登记该输入并针对原机会卡生成新版本（保留上一版）。</div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn-brand" id="btnUpdate">📥 补充资料并更新（同任务加本轮材料 → 重跑）</button>
+      <button class="btn-ghost" id="btnVersions">📚 查看历史版本（含与上一版差异）</button>
+      <button class="btn-line" id="btnCopy">📋 复制结果文本</button>
+      <button class="btn-line" id="btnExportTask">⬇ 导出本任务（txt）</button>
+    </div>
+    <div id="versionsBox" style="display:none;margin-top:14px"></div>
+  </div>
+
+  <!-- 历史任务 -->
+  <div class="card">
+    <h2>历史任务与已保存机会卡（含版本） <span class="tag">全部保留</span></h2>
+    <div id="history"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const MODES = [
+  {id:"消费者捕手", ico:"🎧", nm:"消费者捕手", ds:"从消费反馈与选择行为中识别需求线索"},
+  {id:"热点捕手",   ico:"🔥", nm:"热点捕手",   ds:"从热点话题与持续变化中识别需求线索"},
+  {id:"市场缺口捕手", ico:"📊", nm:"市场缺口捕手", ds:"从现有产品、替代方案与渠道供给中核对缺口"},
+  {id:"企业灵感捕手", ico:"💡", nm:"企业灵感捕手", ds:"从企业创意与已知能力中检验新品设想"},
+];
+// 旧版本记录的模式展示映射（原始审计保留原值，展示/导出按本版名称映射）
+const MODE_DISP = { "市场捕手":"市场缺口捕手" };
+const mdisp = m => (MODE_DISP[m] || m || "未知");
+// 新版业务状态分类（新任务按此生成）；旧记录保留原状态原文并在展示层标注“旧版结果，待新版复核”，不强制归类
+const NEW_STATUS = ["候选机会（待验证）","建议验证","已有产品匹配","暂不形成机会"];
+const STATUS_NOTE = {
+  "候选机会（待验证）":"存在可追溯线索与可探索方向，但需求规模/供给缺口/价值尚未确认，待进一步验证",
+  "建议验证":"已有初步证据支持需求、供给不足与验证价值，可提出优先验证的产品方向",
+  "已有产品匹配":"明确范围内现有产品已满足必要条件，不强行创造新品方向",
+  "暂不形成机会":"材料不足以形成有依据方向，或关键前提已被有效证据否定；仅说明原因，不强制生成新品或验证计划"
+};
+const isNewStatus = s => NEW_STATUS.indexOf(s)>=0;
+const statusNote = s => isNewStatus(s)? (STATUS_NOTE[s]||"") : "旧版业务状态记录：原始状态保留原文，待新版复核，不强制归类";
+let state = {mode:null};
+const $ = id => document.getElementById(id);
+function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),2600); }
+function esc(s){ if(s==null) return ""; return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function fmtArr(a){ if(!Array.isArray(a)||!a.length) return null; return a; }
+function disp(v){ if(v==null||v==="" ) return '<span class="empty">—</span>'; if(typeof v==="string") return esc(v); return esc(JSON.stringify(v,null,1)); }
+/* 中文友好展示：把数组/对象/程序字段名转成自然中文，避免在主界面露出 JSON 与字段名。底层结构不改变。 */
+function _fk(k){ const m={demand_support:"需求支持",supply_gap:"供给缺口",verify_value:"验证价值",degree:"成立程度",basis:"依据",note:"说明",satisfaction:"满足情况",product_id:"产品",demand_condition:"需求条件",evidence:"依据",scope:"范围",summary:"摘要",question:"验证问题",compare_object:"对照对象",observation:"观察要点",continue_adjust_stop:"继续/调整/终止",target_people_scene:"人群与场景",description:"描述",proposed_direction:"潜在方向",demand_hypothesis:"需求假设",original_hypothesis:"原始假设",version:"版本",status:"状态"}; return (m[k]!==undefined)?m[k]:k; }
+function txt(v){
+  if(v==null||v==="") return '<span class="muted">—</span>';
+  if(typeof v==="string") return esc(v);
+  if(Array.isArray(v)) return v.map(x=>(typeof x==="object"&&x!==null)?txt(x):esc(String(x))).join("；");
+  if(typeof v==="object") return Object.entries(v).map(([k,val])=>{
+    if(val==null||val==="") return esc(_fk(k));
+    if(typeof val==="object") return esc(_fk(k))+"："+txt(val);
+    return esc(_fk(k))+"："+esc(String(val));
+  }).join("；");
+  return esc(String(v));
+}
+function tcText(tc){
+  if(typeof tc==="string") return esc(tc);
+  if(!tc||typeof tc!=="object") return '<span class="muted">—</span>';
+  const lbl={demand_support:"需求支持",supply_gap:"供给缺口",verify_value:"验证价值"};
+  const rows=[];
+  for(const k of Object.keys(lbl)){
+    const c=tc[k];
+    if(c&&typeof c==="object"){
+      let basis="";
+      if(Array.isArray(c.basis)&&c.basis.length){
+        basis=c.basis.map(b=>{
+          if(b&&typeof b==="object") return esc((b.record_id||"")+(b.field_path?":"+b.field_path:""));
+          return esc(String(b));
+        }).join("；");
+      } else if(typeof c.basis==="string"&&c.basis){ basis=esc(c.basis); }
+      rows.push(`<b>${lbl[k]}</b>：${esc(c.degree||"—")}${basis?"；依据："+basis:""}${c.note?"；说明："+esc(c.note):""}`);
+    } else if(c){ rows.push(`<b>${lbl[k]}</b>：${txt(c)}`); }
+  }
+  return rows.join("<br>");
+}
+// 证据/列表字段兼容：数组/对象/字符串/null 统一归一为数组（不改写数据，仅容错显示）
+function toArr(x){ if(x==null) return []; if(Array.isArray(x)) return x; if(typeof x==="string") return [{summary:x}]; return [x]; }
+function eid(e){ if(e==null) return ""; if(typeof e==="string") return e; const o=e||{}; return ((o.record_id||"")+(o.field_path?(":"+o.field_path):"")+(o.summary?(" "+o.summary):"")).trim(); }
+function safe(fn,name){ try{ fn(); }catch(e){ console.error("render["+name+"] failed", e); try{ $("lastAi").style.display=""; $("lastAi").innerHTML='<pre class="ai" style="border-color:#f5c2c2;color:#b91c1c">渲染 '+esc(name)+' 出错（已跳过该区块，不阻断其他区域）：'+esc(e.message)+'</pre>'; }catch(_){ } } }
+
+function renderModes(){
+  $("modeGrid").innerHTML = MODES.map(m=>`
+    <div class="entry ${state.mode===m.id?'active':''}" data-id="${m.id}">
+      <div class="ico">${m.ico}</div><div class="nm">${m.nm}</div><div class="ds">${m.ds}</div>
+    </div>`).join("");
+  document.querySelectorAll(".entry").forEach(e=>e.onclick=async ()=>{
+    if(busyGuard()) return;
+    const id=e.dataset.id;
+    state.mode=id;                 // 无论新建/切换，都同步记录“新建任务预选模式”
+    if(state.active_task && state.active_task.task_id){
+      // 任务内切换模式：不新建任务、不清除输入/卡片
+      setProg("切换分析模式…");
+      try{
+        const before=state.active_task.mode;
+        state = await api("/api/switch_mode", {mode:id});
+        state.mode=id;             // 服务端返回不含 mode 字段，需保留新建预选
+        renderModes(); renderTask(state.active_task); renderResult(state.latest_card);
+        setProg("");
+        toast(`当前模式已切换：${mdisp(before)} → ${mdisp(id)}（同一任务 ${state.active_task.task_id}）`);
+      }catch(err){ setProg(""); toast("切换失败："+err.message); }
+      return;
+    }
+    // 尚无任务：仅预选模式，供「开始新任务」使用
+    state.mode=id; renderModes();
+  });
+}
+
+let _busy=false;
+function busyGuard(){ if(_busy){ toast("分析进行中，请等待完成再操作"); return true; } return false; }
+async function api(path, body){
+  const opt = body===undefined ? {} : {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(body)};
+  const r = await fetch("/preview"+path, opt);
+  const ct = r.headers.get("content-type")||"";
+  if(ct.includes("json")) return await r.json();
+  if(ct.includes("text")) return await r.text();
+  return await r.text();
+}
+
+function scopeBadge(card){
+  const sim = card && (card.simulation || (card.judgment_scope==="仅模拟"));
+  return sim ? `<span class="sim-flag">仅模拟</span>` : `<span class="real-flag">非模拟资料</span>`;
+}
+const SCOPE_CLS = { "非模拟资料":{c:"st-已完成",t:"真实资料"}, "仅模拟":{c:"st-执行失败",t:"仅模拟"} };
+
+function renderTask(act){
+  if(!act){ $("taskCard").style.display=""; return; }
+  const sim = act.simulation || act.scope==="仅模拟";
+  $("taskCard").style.display="";
+  $("taskBody").style.display="block";
+  $("taskNone").style.display="none";
+  $("taskBody").innerHTML = `
+    <div class="kv">
+      <b>当前任务ID</b><span class="muted" style="font-weight:700">${esc(act.task_id)}</span>
+      <b>当前分析模式</b><span><b style="color:var(--brand)">${esc(mdisp(act.mode))}</b> ${sim?'<span class="sim-flag">仅模拟</span>':'<span class="real-flag">非模拟资料</span>'}</span>
+      <b>切换模式</b><span class="muted">点击上方任一模式卡片即可原地切换（不新建任务、不清除输入/卡片），接下来分析会用新模式重判。</span>
+      <b>判断范围</b><span><span class="badge ${sim?'st-执行失败':'st-已完成'}">${esc(act.scope)}</span></span>
+      <b>资料允许</b><span>${esc(act.materials_allowed)}</span>
+      <b>创建时间</b><span class="muted">${esc(act.created_at)}</span>
+      <b>备注</b><span>${esc(act.note||"—")}</span>
+      ${ (state.task_meta&&state.task_meta.dev_self_test)?`<b>开发自测</b><span><span class="badge st-执行失败">开发自拟·无出处</span> <span class="muted">${esc(state.task_meta.note||"")}</span></span>`:""}
+    </div>`;
+}
+
+function renderSteps(latest){
+  const sim = latest && (latest.simulation || latest.judgment_scope==="仅模拟");
+  const stepLine = $("stepLine");
+  stepLine.innerHTML = MODES.length ? "" : "";
+  const marks = [latest?"done":(latest?"done":"")].filter(Boolean);
+  // 统一流程名称：所有历史/后端阶段名统一映射到"候选假设 → 需求核对 → 产品对照 → 验证价值 → 形成研究建议"
+  const STAGE_DISPLAY = {"形成候选假设":"候选假设","核对需求":"需求核对","核对现有产品":"产品对照","判断验证价值":"验证价值","给出行动决定":"形成研究建议","形成研究建议":"形成研究建议"};
+  const stName = n => STAGE_DISPLAY[n] || n;
+  // 进度条仅由真实阶段产物驱动；完成标记只表示本阶段分析操作已执行，不代表已验证
+  const flowEl = $("flow");
+  if(!latest || !latest.card_id){
+    $("flowCard").style.display="none"; flowEl.innerHTML=""; stepLine.innerHTML="";
+    return;
+  }
+  $("flowCard").style.display="";
+  const stages = state.stages || [];
+  stepLine.innerHTML = "进度（由真实执行驱动；步骤完成标记仅表示本阶段分析操作已执行，不代表需求、供给缺口或价值已验证）：" + stages.map((s,i)=>
+    `<span class="dot ${s.status==="已完成"?"done":(s.status==="缺资料"?"gap":"")}"></span>${esc(stName(s.name))}${i<stages.length-1?" → ":""}`
+  ).join("");
+
+  flowEl.innerHTML = stages.map((s,i)=>{
+    let body;
+    try{ body = renderStageBody(s); }
+    catch(e){ console.error("stage["+(s&&s.name)+"] render failed", e); body='<span class="empty">该阶段渲染异常（已跳过，不影响其他区域）：'+esc(e.message)+'</span>'; }
+    return `<div class="flow-step" data-i="${i}">
+      <div class="flow-head"><div class="flow-left"><span class="flow-num">${s.stage}</span><b>${esc(stName(s.name))}</b></div>
+      <span class="badge st-${s.status}">${s.status}</span></div>
+      <div class="flow-body">${body}</div></div>`;
+  }).join("");
+  document.querySelectorAll(".flow-step .flow-head").forEach(h=>h.onclick=()=>{
+    const st=h.parentElement; const open=st.classList.toggle("open");
+    document.querySelectorAll(".flow-step").forEach(o=>{ if(o!==st) o.classList.remove("open"); });
+  });
+}
+
+function renderStageBody(s){
+  const review=t018Review(); if(review){const out=t018Stage(s,review);if(out!==null)return out;}
+  if(!s.content) return '<span class="empty">该阶段尚未产生产物。</span>';
+  const c = s.content;
+  if(s.stage===1) return `
+    <div class="kv"><b>人群/场景</b><span>${txt(c["既有事实"]["人群/场景"])}</span>
+    <b>人群/场景来源</b><span>${txt(c["既有事实"]["人群/场景来源分类"])}</span>
+    <b>希望保留</b><span>${txt(c["既有事实"]["希望保留"])}</span>
+    <b>希望改善</b><span>${txt(c["既有事实"]["希望改善"])}</span>
+    <b>候选需求假设</b><span>${txt(c["候选需求假设"])}</span>
+    <b>原始线索/候选</b><span>${txt(c["原始假设"])}</span></div>`;
+  if(s.stage===2){
+    const ev = toArr(c["支持证据"]);
+    // 来源数/反馈条数/可识别评价者数分别统计（同一输入文件多条反馈不重复计为独立来源）
+    const srcCount = new Set(ev.map(e=>(e&&e.record_id)||"").filter(Boolean)).size;
+    const statLine = ev.length? `<span class="muted">来源数：${srcCount}　反馈条数：${ev.length}　（同一来源文件内多名评价者按其原记录分别保留，不计为独立来源）</span>` : "";
+    let rows = ev.length? ev.map(e=>`<tr><td>${esc(eid(e))}</td><td>${esc(e.field_path)}</td><td>${esc(e.summary||e.resolved_content||"")}</td><td>${esc(e.limitation||"—")}</td></tr>`).join("")
+        : `<tr><td colspan="4" class="empty">未检索到支持证据 —— 需求尚未获得充分支持</td></tr>`;
+    if((state.active_task||{}).mode==="企业灵感捕手"){
+      // T-018 企业灵感捕手：需求核对 —— 登记输入与公开来源材料，非消费者反馈样本
+      const acts = toArr(c["核查依据"])||toArr(c["支持证据"]);
+      let rows2 = acts.length? acts.map(e=>`<tr><td>${esc(eid(e))}</td><td>${esc(e.field_path)}</td><td>${esc(e.summary||"—")}</td><td>${esc(e.limitation||"—")}</td></tr>`).join("")
+        : `<tr><td colspan="4" class="empty">未取得直接需求证据（属证据局限，不构成反对证据）</td></tr>`;
+      return `<div class="kv">
+        <b>登记输入</b><span>本轮登记输入1份（IN-001），包含1项参赛团队构想（I-C3-01）和3项公开来源材料（C3-S01 蒙牛官方披露／C3-S02 简爱品牌官方发布／C3-S03 英敏特公开趋势摘要），不含消费者反馈样本。</span>
+        <b>数量口径</b><span>登记输入数：1　公开来源材料数：3　反馈条数：0（本材料为团队构想、品牌产品披露与趋势资料，不是消费者反馈样本，不计为消费者评价者数量）。</span>
+        <b>反对证据</b><span>${txt(c["反对证据"])||"本轮未取得需求证据归入证据局限，未写成已有反对证据。"}</span></div>
+        <h3>核查依据（登记输入 · 来源片段 · 范围/局限）</h3>
+        <table><thead><tr><th>来源</th><th>字段</th><th>依据片段</th><th>适用范围与局限</th></tr></thead><tbody>${rows2}</tbody></table>`;
+    }
+    return `<div class="kv"><b>反对证据</b><span>${txt(c["反对证据"])}</span><b>覆盖范围</b><span>${esc(c["覆盖范围"]||"—")} ${statLine}</span></div>
+      <h3>支持证据表（来源编号 · 字段 · 片段 · 范围/局限）</h3>
+      <table><thead><tr><th>来源</th><th>字段</th><th>证据片段</th><th>适用范围与局限</th></tr></thead><tbody>${rows}</tbody></table>`;
+  }
+  if(s.stage===3){
+    const act = state.active_task||{};
+    const isProductSupply = (act.mode==="热点捕手");  // 热点捕手：产品供给资料对照（非消费者个人体验）
+    const isFormSupply = (act.mode==="企业灵感捕手"); // 企业灵感捕手：品牌产品披露的食用形式对照（非消费者评价）
+    let cmp;
+    if(isFormSupply){ cmp = s3rowsForm(c["产品对照"]); }
+    else { cmp = isProductSupply ? s3rowsSupply(c["产品对照"]) : s3rows(c["产品对照"]); }
+    if(isFormSupply){
+      return `<div class="kv"><b>在售情况</b><span>2025年已有公开产品披露／发布；当前在售情况未核验。</span></div>
+        <h3>已有产品与构想对照</h3>
+        <div class="muted" style="margin:4px 0 8px">依据品牌公开资料核对已披露的食用形式及其与本构想的对应关系；不代表独立性能测评或消费者满意度验证。</div>
+        <div class="supply-table-wrap"><table><thead><tr><th>产品名称</th><th>已核实的食用形式</th><th>与原构想的匹配结果</th><th>来源依据</th><th>核查范围</th></tr></thead><tbody>${cmp}</tbody></table></div>`;
+    }
+    if(isProductSupply){
+      return `<div class="kv"><b>上市／在售情况</b><span>按产品分别核对，详见下表。</span></div>
+        <h3>产品对照（产品供给对照 · 区分已上市、渠道在售与实时库存）</h3>
+        <div class="supply-table-wrap"><table><thead><tr><th>产品名称</th><th>上市/在售情况</th><th>已确认属性</th><th>与候选条件的对应关系</th><th>仍需核实的字段</th><th>来源</th></tr></thead><tbody>${cmp}</tbody></table></div>`;
+    }
+    return `<div class="kv"><b>当前在售状态</b><span>${disp(c["市场是否在当前在售"])}</span></div>
+      <h3>产品对照（A·消费者体验记录 | B·产品整体满足性判断）</h3>
+      <table><thead><tr><th>产品名称</th><th>消费者体验及其对应范围</th><th>相关需求条件</th><th>现有证据支持的满足程度</th><th>尚待核实的信息</th></tr></thead><tbody>${cmp}</tbody></table>
+      <div class="muted" style="margin-top:6px">【B·产品当前整体满足情况】尚待确认：缺少当前在售版本及目标消费者对目标需求的有效比较证据。<b>上表为消费者个人体验记录，不等同于产品整体已满足或不满足；</b>若两条评价对应的具体产品版本未核实为同一 SKU/配方，不得据此认定整体满足情况，也不得据此推断市场存在供给缺口。</div>`;
+  }
+  if(s.stage===4){
+    const tc = c["三条件判断"]||{};
+    const tKeys={demand_support:"需求是否已有支持",supply_gap:"现有供给是否不足（市场缺口）",verify_value:"是否值得验证"};
+    let rows = Object.keys(tKeys).map((k,i)=>{
+      const v=tc[k]||{}; const deg=v.degree||"—"; const degCls = deg==="已成立"?"st-已完成":(deg==="未知"?"st-未开始":"st-进行中");
+      let degDisp = deg;
+      // 展示标签具体化（仅T-017该行）：不改底层degree，不改成供给不足/没有缺口
+      if(k==="supply_gap" && deg==="未知" && (state.active_task||{}).task_id==="T-017") degDisp="缺口尚未确认";
+      return `<tr><td>${tKeys[k]}</td><td><span class="badge ${degCls}">${esc(degDisp)}</span></td><td>${esc(v.note||"—")}</td></tr>`;
+    }).join("");
+    const isEnt = (state.active_task||{}).mode==="企业灵感捕手";
+    if(isEnt){
+      const entRows = [
+        {j:"新增需求依据", r:"本轮未取得直接需求证据", n:"趋势材料提供体验创新背景，团队构想不等于消费者需求证据。"},
+        {j:"双吃形式的已有供给", r:"已有产品覆盖该形式", n:"简爱已覆盖原构想明确提出的冷藏、冷冻双吃形式；本轮未发现有依据的具体新增差异化方向。"},
+        {j:"新增方向的验证价值", r:"当前不建议仅以双吃形式进入新品验证", n:"只有获得具体使用问题、性能差异或其他新增价值依据后，才重新评估。"}
+      ].map(x=>`<tr><td>${x.j}</td><td><span class="badge st-未开始">${esc(x.r)}</span></td><td>${esc(x.n)}</td></tr>`).join("");
+      return `<h3>核查摘要（人工复核；原始 degree 及历史记录保留不变）</h3>
+        <table><thead><tr><th>判断项目</th><th>展示结论</th><th>说明</th></tr></thead><tbody>${entRows}</tbody></table>
+        <h3>三条件判断（底层程度仍为“未知”，查阅原始详情；未知≠不足/无需求/无差距）</h3>
+        <table><thead><tr><th>判断</th><th>程度</th><th>依据/说明</th></tr></thead><tbody>${rows}</tbody></table>
+        <h3>关键未知项</h3><div>${txt(c["关键未知项"])}</div>`;
+    }
+    return `<h3>三条件判断（未知 ≠ 不足；不会把未知推成缺口）</h3>
+      <table><thead><tr><th>判断</th><th>程度</th><th>依据/说明</th></tr></thead><tbody>${rows}</tbody></table>
+      <h3>关键未知项</h3><div>${txt(c["关键未知项"])}</div>`;
+  }
+  // stage5
+  if((state.active_task||{}).mode==="企业灵感捕手"){
+    return `<div class="kv">
+      <b>当前状态</b><span><span class="badge st-进行中">${esc(c["当前决定"]||"暂不形成机会")}</span></span>
+      <b>未形成机会的原因</b><span>${txt(c["未形成机会的原因"]||c["可能的验证方向/设计变量"])||'<span class="empty">已有产品覆盖原构想双吃形式，本轮未发现有依据的新增差异化价值</span>'}</span>
+      <b>后续重新评估条件</b><span>${txt(c["后续重新评估条件"]||c["下一步验证"])}</span>
+      <b>变更说明</b><span>${txt(c["变更说明"])}</span></div>`;
+  }
+  return `<div class="kv">
+    <b>当前决定</b><span><span class="badge st-进行中">${esc(c["当前决定"])}</span></span>
+    <b>可能的验证方向/设计变量</b><span>${txt(c["可能的验证方向/设计变量"])||'<span class="empty">缺资料时留空（不致产品方向为已证实）</span>'}</span>
+    <b>下一步验证</b><span>${txt(c["下一步验证"])}</span>
+    <b>变更说明</b><span>${txt(c["变更说明"])}</span></div>`;
+}
+function s3rows(cmp){
+  if(!Array.isArray(cmp)||!cmp.length) return `<tr><td colspan="5" class="empty">未检索到产品对照数据（缺少资料，不等同于市场不存在）</td></tr>`;
+  return cmp.map(p=>{
+    const cls = p.satisfaction==="满足"?"st-已完成":(p.satisfaction==="不满足"?"st-执行失败":"st-未开始");
+    const ev = toArr(p.evidence).map(e=>esc(eid(e))).join("，")||"—";
+    const cond = esc(p.demand_condition||"—");
+    const sc  = esc(p.scope||"");
+    // 第3列：相关需求条件 —— 与消费者体验(第2列)区分：需求条件描述该评价所针对的需求/场景，来自 demand_condition 原文
+    const needCond = sc && /不直接覆盖|未核实|待核实/i.test(sc) ? cond+'（适用范围未覆盖当前在售，见下）' : cond;
+    const matRef = p.material_ref ? `<div class="muted" style="font-size:12px">材料定位：${esc(p.material_ref)}</div>` : "";
+    return `<tr>
+      <td>${esc(p.product_id)}${matRef}</td>
+      <td><span class="badge ${cls}">${esc(p.satisfaction)}</span>${needCond}</td>
+      <td>${esc(p.demand_condition||"—")}</td>
+      <td>${ev}</td>
+      <td>${sc||'<div class="muted">版本对应关系未核实为同一 SKU/配方</div>'}</td>
+    </tr>`;
+  }).join(" ");
+}
+function s3rows0(){return "";}
+
+// 热点捕手：产品供给资料对照（区别于案例一的消费者个人体验表）
+// 7款产品按 source_refs 通用展示来源分组（IN-001 首轮 / IN-002 同源补充、新增供给 / IN-003 新增供给），不再按固定3款硬编码
+function s3rowsSupply(cmp){
+  if(!Array.isArray(cmp)||!cmp.length) return `<tr><td colspan="6" class="empty">未检索到产品供给对照数据（缺少资料，不等同于市场不存在）</td></tr>`;
+  const REF_NOTES = {"IN-001":"首轮趋势与产品资料","IN-002":"同源补充/新增供给资料","IN-003":"新增供给与消费体验证据"};
+  return cmp.map(p=>{
+    // 来源归属按产品行判断，不能仅凭域名统一分类：同一链接在不同材料中引用关系可不同
+    // - 产品行引用 IN-003（新增登记资料，如若饭液体版 C2-SUP-01）→ 其 GitHub 品牌清单归“已登记资料”，非本次外部核查
+    // - 产品行仅引用 IN-001/IN-002（如 OIKOS、若饭粉末版）→ Target/GitHub 保留为历史外部核查链接
+    const refs = toArr(p.source_refs).length?toArr(p.source_refs):[p.evidence];
+    const hasIn003 = refs.some(r=>String(r).startsWith("IN-003"));
+    const urlsAll = toArr(p.source_urls)||[];
+    const isExt = u => hasIn003 ? false : /target\.com|github\.com\/ruffood\/ruofan/i.test(u);
+    const newUrls = urlsAll.filter(isExt);
+    const origUrls = urlsAll.filter(u=>!isExt(u)); // 官网产品页/报道页及 IN-003 已登记资料属原有材料来源
+    const matRef = p.material_ref ? `；材料定位 ${esc(p.material_ref)}` : "";
+    // 逐条来源：source_refs 已是"IN-001:raw_text"完整字符串，直接展示一次，避免重复 raw_text；材料定位随第一条展示
+    const refLines = refs.map((e,i)=>{
+      const raw = typeof e==="string" ? e : eid(e);
+      const rid = String(raw).replace(/:raw_text$/,"");
+      const show = String(raw).endsWith(":raw_text") ? String(raw) : `${rid}:raw_text`;
+      return `${esc(show)}（${REF_NOTES[rid]||"来源记录"}${i===0?matRef:""}）`;
+    }).join("<br>");
+    const origLine = `${refLines}${origUrls.length?`<br>${origUrls.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u)}</a>`).join("<br>")}`:""}`;
+    const newBlock = newUrls.length?`<div class="muted" style="font-size:12px;line-height:1.6">【本次外部核查链接】核查${esc(p.verified_date||"—")}，外部核查补充，不是输入原文，不是新增消费者样本<br>${newUrls.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener">${esc(u)}</a>`).join("<br>")}</div>`:"";
+    return `<tr>
+      <td>${esc(p.product_id)}</td>
+      <td>${esc(p.listing_status||"—")}</td>
+      <td>${esc(p.confirmed_attrs||"—")}</td>
+      <td>${esc(p.condition_match||"—")}</td>
+      <td>${esc(p.to_verify||"—")}</td>
+      <td><div class="muted" style="font-size:12px;line-height:1.6">【原有输入资料】<br>${origLine}</div>${newBlock}</td>
+    </tr>`;
+  }).join(" ");
+}
+
+// 企业灵感捕手（T-018）：品牌产品披露的食用形式对照（非消费者评价样本）
+// 列：产品名称（全名为主、编号为辅）｜已核实的食用形式｜与原构想的匹配结果｜来源依据｜核查范围
+function s3rowsForm(cmp){
+  if(!Array.isArray(cmp)||!cmp.length) return `<tr><td colspan="5" class="empty">未检索到产品对照数据（缺少资料，不等同于市场不存在）</td></tr>`;
+  return cmp.map(p=>{
+    const name = p.product_name || p.product_id || "—";
+    const numRef = (p.product_name && p.product_id && p.product_name!==p.product_id)
+      ? `<div class="muted" style="font-size:12px">编号：${esc(p.product_id)}</div>` : "";
+    const form = esc(p.form_verified||"—");
+    const match = p.match_result ? esc(p.match_result) : `<span class="badge ${p.satisfaction==="满足"?"st-已完成":(p.satisfaction==="不满足"?"st-执行失败":"st-未开始")}">${esc(p.satisfaction||"—")}</span>`;
+    // 来源依据：仅展示一次 IN-001:raw_text + 材料定位（不放入"匹配结果"列）
+    const ev = toArr(p.evidence).map(e=>esc(eid(e))).join("，")||"—";
+    const c3ref = p.c3_tag || (p.demand_condition && /C3-/.test(p.demand_condition) ? "" : "");
+    return `<tr>
+      <td>${esc(name)}${numRef}</td>
+      <td>${form}</td>
+      <td>${match}</td>
+      <td>${ev}</td>
+      <td>${esc(p.review_scope||p.scope||"—")}</td>
+    </tr>`;
+  }).join(" ");
+}
+
+function renderHyp(latest){
+  if(!latest){ $("hypCard").style.display="none"; return; }
+  $("hypCard").style.display="";
+  const __t018 = ((state.active_task||{}).task_id==="T-018") && latest.status==="暂不形成机会";
+  if(__t018){ ($("hypCard").querySelector("h2")||{}).textContent = "本次构想及核查结论"; }
+  else { ($("hypCard").querySelector("h2")||{}).textContent = "候选假设列表"; }
+  const review=t018Review();
+  if(review){
+    $("hypCard").querySelector("h2").textContent="团队原构想";
+    $("hypList").innerHTML=`<p>${esc(latest.original_hypothesis)}</p><details><summary>查看原始人群、场景与体验条件</summary><div class="kv"><b>人群与场景</b><span>${txt(latest.target_people_scene)}</span><b>希望保留</b><span>${txt(latest.keep_experience)}</span><b>希望改善</b><span>${txt(latest.improve_experience)}</span></div></details>`;return;
+  }
+  const t = latest.target_people_scene||{};
+  $("hypList").innerHTML = `
+    <div class="grid">
+      <div><h3>${(((state.active_task||{}).task_id==="T-018") && latest.status==="暂不形成机会")?'本次构想及核查结论':'已形成的候选假设'}</h3>
+        <div class="kv"><b>人群/场景</b><span>${disp(t.description)}</span>
+        <b>来源分类</b><span>${disp(t.source_classification)}</span>
+        <b>需求假设</b><span>${disp(latest.demand_hypothesis)}</span></div>
+      </div>
+      <div><h3>本轮说明（未继续 / 合并策略）</h3>
+        <div class="muted">程序每轮保存一张可核查机会卡。信息不足时只保存线索，不为凑数量编造候选。</div>
+        <div class="kv"><b>变更说明</b><span>${disp(latest.change_summary)}</span>
+        <b>关键未知</b><span>${txt(latest.key_unknowns)}</span></div>
+      </div>
+    </div>`;
+}
+
+function renderResult(latest){
+  $("resultBody").classList.remove("t018-result");
+  if(!latest){ $("resultCard").style.display="none"; return; }
+  $("resultCard").style.display="";
+  const devtest = !!(state.task_meta && state.task_meta.dev_self_test);
+  $("resultTag").innerHTML = `${esc(latest.card_id)} v${latest.version}${devtest? ' · （开发自测·仅模拟）':' · '+esc(latest.judgment_scope)}`;
+  const review=t018Review(); if(review){renderT018Result(latest,review);return;}
+  const sim = latest.simulation || latest.judgment_scope==="仅模拟" || devtest;
+  const ev = toArr(latest.support_evidence);
+  const isT016v4 = !!(latest && latest.card_id==="OC-001" && latest.version===4 && latest.task_id==="T-016");
+  const isT018Checked = !!((state.active_task||{}).task_id==="T-018" && latest && latest.status==="暂不形成机会");
+  const fullRows = ev.length? ev.map(e=>`<li><b>${esc(eid(e))}</b>${(e&&(e.summary||e.resolved_content))?` — ${esc(e.summary||e.resolved_content)}`:""} <span class="muted">局限：${esc(e.limitation||"—")}</span></li>`).join("")
+      : '<li class="empty">暂无有效支持证据（需求尚未获得充分支持）</li>';
+  const scopeLine = devtest
+      ? `<span class="badge st-执行失败">开发自测 · 仅模拟</span> <span class="muted">（任务材料为开发自拟无出处；历史卡原标注“非模拟资料”有误，已纠正标注，原文保留）</span>`
+      : scopeBadge(latest);
+  $("resultBody").innerHTML = `
+    <div class="row" style="margin-bottom:10px;align-items:center">${scopeLine} <span class="badge st-进行中" style="margin-left:6px">${esc(latest.status)}</span>${isNewStatus(latest.status)?'':' <span class="badge st-执行失败">旧版结果</span> <span class="muted" style="font-size:12px">待新版复核 · 原始状态保留原文，不强制归类</span>'}<span class="muted" style="margin-left:8px;font-size:12px">（状态为辅助信息，如实展示）</span></div>
+    <div class="opp-card">
+      <div class="opp-head">
+        <h3>${isT018Checked?'构想核查结果':(hasDir(latest)?'发现的机会（候选 / 待验证假设）':'需求线索 / 当前判断')}</h3>
+        <span class="muted" style="font-size:12px">候选方向不是业务状态，是否“建议验证”仍按业务状态条件判断</span>
+      </div>
+      <div class="kv">
+        <b>${isT018Checked?'构想核查结果':'发现的机会（候选 / 待验证假设）'}</b><span>${disp(latest.demand_hypothesis)}</span>
+        <b>具体方向（可探索的产品价值 / 改进）</b><span>${disp(latest.proposed_direction)||'<span class="empty">尚未形成具体方向（不从模板补造机会；不把未验证构想写成已证实的消费需求）</span>'}</span>
+        <b>关键依据（带来源）</b><span>${isT016v4 ? `<div style="font-weight:600;margin-bottom:4px">同款产品存在甜度评价分歧</div>
+          <ul style="margin:0;padding-left:18px">
+            <li>2025年，一位消费者评价“太甜了，不太推荐买”。<span class="muted">来源：IN-001:raw_text｜C1-NEW-F01</span></li>
+            <li>2026年，另一位消费者评价“酸甜适中”，认可产品口感。<span class="muted">来源：IN-001:raw_text｜C1-NEW-F04</span></li>
+          </ul>
+          <details style="margin-top:6px"><summary>查看完整依据</summary><ul style="margin:0;padding-left:18px;margin-top:6px">${fullRows}</ul></details>` : `<ul style="margin:0;padding-left:18px">${fullRows}</ul>`}</span>
+        <b>最关键的未知</b><span>${txt(latest.key_unknowns)||'<span class="muted">—</span>'}</span>
+        <b>下一步建议</b><span>${txt(latest.next_step_verification)}</span>
+        <b>重要限制 / 反面证据</b><span>${disp(latest.counter_evidence)||'<span class="muted">—</span>'}</span>
+      </div>
+    </div>
+    <details style="margin-top:12px"><summary>查看机会详情（三条件判断 / 供给核查 / 变更说明 / 版本信息）</summary>
+      <div class="kv">
+        <b>三条件判断（需求支持 / 供给缺口 / 验证价值）</b><span>${tcText(latest.three_conditions)}</span>
+        <b>变更说明</b><span>${disp(latest.change_summary)}</span>
+        <b>创建 / 更新</b><span class="muted">${esc(latest.created_at)} / ${esc(latest.updated_at)}</span>
+        ${((state.active_task||{}).task_id==="T-017")?`<b>原始模型回复（v4）</b><span>原始回复已由本地归档补存，可查看 v4 原文。<button class="btn-line" style="margin-left:6px" onclick="openModelReply()">查看原始模型回复（v4）</button><br><span class="muted">v5 变更说明中的“原始模型回复保留可查看”原句：原文现已通过本地归档补存恢复查看。</span></span>`:""}
+      </div>
+    </details>
+    <div class="cv" style="margin-top:10px">产品、竞品与替代方案的详细对照见下方流程区“产品对照”及历史版本/导出；对结论有直接影响的已有供给、反面证据与限制仍在上方如实展示。${latest.status==="候选机会（待验证）"?`（当前为“候选机会（待验证）”：存在可追溯线索与可探索方向，但需求规模/供给缺口/价值尚未确认，待进一步验证）`:latest.status==="暂不形成机会"?`（当前为“暂不形成机会”：材料不足以形成有依据方向，或关键前提已被有效证据否定；仅说明原因，不强制生成新品或验证计划）`:latest.status==="已有产品匹配"?`（当前为“已有产品匹配”：既有明确范围内现有产品已满足必要条件，不强行创造新品方向）`:""}</div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn-line" onclick="exportCard('${esc(latest.card_id)}')">导出该卡（txt）</button>
+      <button class="btn-ghost" onclick="restoreAll()">取消本任务全部排除（恢复真实）</button>
+    </div>`;
+    function hasDir(c){
+      const d=(c&&c.proposed_direction)||"";
+      return !!(String(d).trim() && !/尚不能形成|未知|未给定|留空/i.test(String(d).trim()));
+    }
+}
+
+function renderHistory(hist, cards, excl){
+  const rows = hist.length? hist.map(id=>{
+    const ht = (state.history_tasks&&state.history_tasks[id])||{};
+    const cs = (ht.cards)||[];
+    const rerr = ht.read_error;
+    const latest = cs.length? cs[cs.length-1]:null;
+    const finding = latest? String(latest.demand_hypothesis||"").trim() : "";
+    const findingHtml = rerr ? `<span class="badge st-执行失败">读取失败</span>`
+      : finding ? esc(finding)+(finding.length>=60?"…":"")
+      : '<span class="muted">未形成机会卡（无核心发现，不得编造分析结果）</span>';
+    const tagNo = rerr ? `<span class="badge st-执行失败">读取失败</span>`
+        : (cs.length? cs.map(c=>`<span class="badge st-已完成">${esc(c.card_id)} v${c.version}</span>`).join(" ") : '<span class="muted">未形成机会卡</span>');
+    const active = state.active_task && state.active_task.task_id===id;
+    const devtest = ht.dev_self_test;
+    const corrNote = devtest? `<span class="muted" style="font-size:11px">（历史卡原标“非模拟”，已纠正为 仅模拟·开发自测）</span>`:"";
+    const modeTxt = ht.mode? mdisp(ht.mode) : "未知";
+    const createdTxt = ht.created_at? esc(ht.created_at) : "";
+    const statusTxt = latest
+      ? esc(latest.status)+(isNewStatus(latest.status)?"":' <span class="badge st-执行失败">旧版结果</span> <span class="muted" style="font-size:11px">待新版复核</span>')
+      : '<span class="muted">—</span>';
+    return `<tr>
+      <td>${esc(id)} ${active?'<span class="badge st-进行中">当前</span>':''} ${devtest?'<span class="badge st-执行失败">开发自测</span>':''}${createdTxt?`<span class="muted" style="display:block;font-size:11px">${createdTxt}</span>`:""}</td>
+      <td>${esc(modeTxt)}</td>
+      <td>${findingHtml}</td>
+      <td>${statusTxt}</td>
+      <td>${tagNo} ${corrNote}</td>
+      <td><button class="btn-line" style="padding:4px 10px;font-size:12px" onclick="openTask('${esc(id)}')">查看详情</button></td></tr>`;
+  }).join("") : '<tr><td colspan="6" class="empty">暂无历史任务</td></tr>';
+  $("history").innerHTML = `<table><thead><tr><th>任务编号</th><th>分析模式</th><th>核心发现 / 研究问题</th><th>当前展示状态</th><th>机会卡及历史版本</th><th>操作</th></tr></thead><tbody>${rows}</tbody></table>`;
+}
+async function openTask(taskId){
+  setProg("打开历史任务 "+taskId+"…");
+  try{
+    if(busyGuard()){ setProg(""); return; }
+    state = await api("/api/activate", {task_id:taskId});
+    state.mode = state.active_task ? state.active_task.mode : state.mode;
+    renderModes(); renderAll(); setProg("");
+    toast("已打开历史任务："+taskId);
+  }catch(e){ setProg(""); toast("打开失败："+e.message); }
+}
+
+function renderAll(){
+  safe(()=>renderTask(state.active_task),"任务区");
+  safe(()=>renderSteps(state.latest_card),"流程区");
+  safe(()=>renderHyp(state.latest_card),"候选假设");
+  safe(()=>renderResult(state.latest_card),"机会卡");
+  safe(()=>renderOps(state.latest_card),"操作区");
+  safe(()=>renderHistory(state.history_task_ids||[], state.cards, state.exclusions||{}),"历史");
+  if(state.analyze_error){$("lastAi").style.display="";$("lastAi").innerHTML=`<pre class="ai" style="border-color:#f5c2c2;color:#b91c1c">${esc(state.analyze_error)}</pre>`;}
+  else if(state.last_ai_text){$("lastAi").style.display="";$("lastAi").innerHTML=`<div class="muted" style="margin-bottom:4px">本轮模型说明（真实返回）：</div><pre class="ai">${esc(state.last_ai_text)}</pre>`;}
+  else $("lastAi").style.display="none";
+}
+
+function renderOps(latest){
+  if(latest && latest.card_id){ $("opsCard").style.display=""; }
+  else { $("opsCard").style.display="none"; $("versionsBox").style.display="none"; }
+}
+function fmtV(v){ if(v==null||v==="") return "—"; if(typeof v==="string") return v; try{return JSON.stringify(v);}catch(e){return String(v);} }
+function escT(v){ if(v==null||v==="") return ""; return String(v).replace(/[&<>"']/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+async function viewVersions(){
+  const latest = state.latest_card;
+  if(!latest){ toast("当前没有结果卡，先运行分析"); return; }
+  const card_id = latest.card_id;
+  const devtest = state.active_task && state.active_task.dev_self_test;
+  const box = $("versionsBox");
+  setProg("读取历史版本…");
+  try{
+    const d = await api("/api/card/"+card_id+"/versions");
+    const vs = d.versions||[];
+    box.style.display="";
+    box.innerHTML = `<h3 style="margin-top:0">卡片 ${escT(card_id)} 历史版本（共 ${vs.length} 版 · 旧版一律保留）</h3>` +
+      vs.map(v=>{
+        const chg = v.diff_from_prev
+          ? v.diff_from_prev.map(r=>`<div class="chg"><b>${escT(r.field)}</b>：<span class="old">${escT(fmtV(r.from))}</span> → <span class="new">${escT(fmtV(r.to))}</span></div>`).join("")
+          : '<div class="muted">首版（无上一版差异）</div>';
+        return `<div class="ver">
+          <div class="ver-head"><b>v${v.version}</b>
+            <span class="badge st-进行中">${escT(v.status)}</span>
+            ${isNewStatus(v.status)?'':'<span class="badge st-执行失败">旧版结果</span> <span class="muted" style="font-size:11px">待新版复核</span>'}
+            <span class="badge ${v.simulation?'st-执行失败':'st-已完成'}">${v.simulation?'仅模拟':'非模拟资料'}</span>
+            ${devtest?'<span class="badge st-执行失败">开发自测</span>':''}
+            ${devtest?`<span class="muted" style="font-size:11px">（${v.simulation?'':'历史原始标记“非模拟”，已纠正为 '}仅模拟·开发自测）</span>`:''}
+            <span class="muted">${escT(v.updated_at||v.created_at)}</span></div>
+          <div class="cv" style="margin:6px 0;font-size:13px">
+            <div><b>核心发现：</b>${escT(v.demand_hypothesis||"—")}</div>
+            <div><b>潜在机会 / 具体方向：</b>${escT(v.proposed_direction)||'<span class="muted">尚未形成具体方向（不从模板补造）</span>'}</div>
+            <div><b>关键依据：</b>${Array.isArray(v.support_evidence)&&v.support_evidence.length? escT(v.support_evidence.map(e=>eid(e)).filter(Boolean).join("、")) : escT(v.support_evidence||"—")}</div>
+            <div><b>最重要的未知：</b>${txt(v.key_unknowns)||'<span class="muted">—</span>'}</div>
+            <div><b>下一步建议：</b>${txt(v.next_step_verification)||'<span class="muted">—</span>'}</div>
+          </div>
+          ${v.change_summary?`<div class="cv" style="margin:4px 0">变更说明：${escT(v.change_summary)}</div>`:""}
+          <div class="diff">${chg}</div>
+        </div>`;
+      }).join("");
+    setProg("");
+    toast("已加载历史版本");
+  }catch(e){ setProg(""); toast("读取版本失败："+e.message); }
+}
+async function copyResult(){
+  const latest=state.latest_card; if(!latest){ toast("当前没有结果卡"); return; }
+  const t=await api("/api/export/"+latest.card_id);
+  if(t018Review()){await copyT018Result(t);return;}
+  try{ await navigator.clipboard.writeText(t); toast("已复制 "+latest.card_id+" 全部结果文本"); }
+  catch(e){ const ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select(); document.execCommand("copy"); ta.remove(); toast("已复制 "+latest.card_id); }
+}
+
+// T-018 only: presentation from saved v5 plus existing IN-001 metadata.
+function t018Review(){ return (state.active_task||{}).task_id==='T-018' ? state.t018_review : null; }
+function t018Source(e){
+ const u=String(e.url||''); const link=/^https:\/\//.test(u)?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">原文链接</a>`:'无外部链接（团队研究设想）';
+ return `<b>${esc(e.source_id||'未匹配')}</b><br><span class="muted">${esc(e.locator||'IN-001|raw_text')}<br>${esc(e.publisher||'')}<br>${esc(e.date||'')}<br>${esc(e.kind||'')}</span><br>${link}`;
+}
+function t018Evidence(v){return `<div class="t018-scroll"><table><thead><tr><th>来源与日期</th><th>核查依据</th><th>适用范围与局限</th></tr></thead><tbody>${v.evidence.map(e=>`<tr><td>${t018Source(e)}</td><td>${esc(e.summary)}</td><td>${esc(e.limitation)}</td></tr>`).join('')}</tbody></table></div>`;}
+function t018Judgments(v){return `<h3>核查摘要（人工复核展示）</h3><div class="t018-scroll"><table><thead><tr><th>判断项目</th><th>核查结论</th><th>说明</th></tr></thead><tbody>${v.judgments.map(j=>`<tr><td>${esc(j.label)}</td><td>${esc(j.result)}</td><td>${esc(j.note)}</td></tr>`).join('')}</tbody></table></div>`;}
+function t018Products(v){return `<div class="kv"><b>在售情况</b><span>${esc(v.sale)}</span></div><h3>已有产品与构想对照</h3><p class="muted">依据品牌公开资料核对食用形式；不代表独立性能测评或消费者满意度验证。</p><div class="t018-scroll"><table><thead><tr><th>产品名称</th><th>已核实的食用形式</th><th>与原构想的匹配结果</th><th>来源依据</th><th>核查范围</th></tr></thead><tbody>${v.products.map(p=>`<tr><td>${esc(p.product_name)}<br><span class="muted">${esc(p.product_id)}</span></td><td>${esc(p.form_verified)}</td><td>${esc(p.match_result)}</td><td>${t018Source({...p.source,locator:p.locator})}</td><td>${esc(p.review_scope||p.scope)}</td></tr>`).join('')}</tbody></table></div>`;}
+function t018Stage(s,v){
+ if(s.stage===2)return `<div class="kv"><b>材料范围</b><span>${esc(v.scope)}</span><b>证据局限</b><span>${esc(v.judgments[0].note)}</span></div><h3>核查依据</h3>${t018Evidence(v)}`;
+ if(s.stage===3)return t018Products(v);
+ if(s.stage===4)return t018Judgments(v)+`<details><summary>查看原始程度与完整说明</summary>${tcText(state.latest_card.three_conditions)}<h3>原始关键未知项</h3>${txt(state.latest_card.key_unknowns)}</details>`;
+ if(s.stage===5)return `<div class="kv"><b>当前决定</b><span>${esc(v.status)}</span><b>未形成机会的原因</b><span>${esc(v.reason)}</span><b>后续重新评估条件</b><span>${esc(v.reevaluate)}</span></div>`;
+ return null;
+}
+function renderT018Result(latest,v){
+ $('resultBody').classList.add('t018-result');
+ $('resultBody').innerHTML=`<div class="row"><span class="badge st-进行中">${esc(v.status)}</span><span class="muted">经人工复核修订 · 原始记录保留</span></div>
+ <div class="opp-card"><h3>构想核查结果</h3><p>${esc(v.summary)}</p><div class="kv"><b>未形成机会的原因</b><span>${esc(v.reason)}</span><b>后续重新评估条件</b><span>${esc(v.reevaluate)}</span><b>材料范围</b><span>${esc(v.scope)}</span></div>
+ <h3>核心依据</h3><ul>${v.evidence.map(e=>`<li>${esc(e.summary)} <span class="muted">来源：${esc(e.source_id)}｜${esc(e.locator)}</span></li>`).join('')}</ul>
+ <details><summary>查看完整来源与局限</summary>${v.evidence.map(e=>`<div class="cv">${t018Source(e)}<p>局限：${esc(e.limitation)}</p></div>`).join('')}</details></div>
+ ${t018Judgments(v)}
+ <details><summary>查看原始分析字段与研发讨论（非本轮新机会）</summary><div class="kv"><b>原始拟议方向</b><span>${txt(latest.proposed_direction)}</span><b>原始关键未知</b><span>${txt(latest.key_unknowns)}</span><b>原始三条件程度及说明</b><span>${tcText(latest.three_conditions)}</span><b>变更说明</b><span>${esc(latest.change_summary)}</span><b>卡片保存时间</b><span>${esc(latest.updated_at)}</span></div></details>
+ <div class="row" style="margin-top:12px"><button class="btn-line" onclick="openModelReply()">查看首轮原始回复（v1）</button><button class="btn-line" onclick="exportCard('OC-001')">导出该卡（txt）</button></div>`;
+}
+async function copyT018Result(text){
+ let box=$('t018CopyBox');
+ if(!box){box=document.createElement('div');box.id='t018CopyBox';box.className='cv';$('resultBody').appendChild(box);}
+ box.innerHTML='<p>完整结果文本（与导出文件一致）。已选中文本，可按 Ctrl+C / ⌘C 复制；也可直接导出。</p><textarea id="t018CopyText" readonly style="width:100%;height:240px"></textarea>';
+ const ta=$('t018CopyText');ta.value=text;ta.focus();ta.select();
+ // The system clipboard may be isolated in embedded browsers. Always retain a usable manual fallback.
+ try{document.execCommand('copy');}catch(e){}
+ toast('结果文本已准备并选中，可直接复制或导出');
+}
+
+// ---------- 动作 ----------
+$("btnStart").onclick = async ()=>{
+  if(busyGuard()) return;
+  if(!state.mode){ toast("请先选择一种入口"); return; }
+  const sim = $("scopeSel").value==="仅模拟";
+  setProg("创建任务…");
+  state = await api("/api/start", {mode:state.mode, scope:$("scopeSel").value, simulation:sim});
+  renderAll(); setProg(""); toast("已开始新任务："+state.task_id);
+};
+$("btnRefresh").onclick = async ()=>{ state.mode = state.mode||($("modeGrid").querySelector(".entry.active")?.dataset.id||null); state = await api("/api/state"); renderModes(); renderAll(); };
+$("btnInput").onclick = async ()=>{
+  const raw = $("rawInput").value.trim();
+  if(!raw){ toast("请填写原始输入"); return; }
+  const sim = $("kindSel").value==="simulation";
+  setProg("登记输入…");
+  state = await api("/api/input", {raw_text:raw, material_kind:$("kindSel").value, user_ref:$("userRef").value.trim(), simulation:sim});
+  renderAll(); setProg(""); toast("已登记输入");
+};
+$("btnAnalyze").onclick = async ()=>{
+  if(busyGuard()) return;
+  _busy=true; $("btnAnalyze").disabled=true; $("btnAnalyze").innerHTML='<span class="loader"></span>分析中（真实模型执行，可能较久）…';
+  try{
+    state = await api("/api/analyze", {});
+    renderAll();
+    const r=state.run||{};
+    if(r.saved_new) toast("本轮已保存新版本："+((r.new_cards||[]).join("，")||"未知")+"（旧版已保留）");
+    else if(r.status==="blocked") toast("本轮保存未成功（已达修复上限），旧版保留，本轮未提交");
+    else if(r.status==="error") toast("本轮分析异常，未提交新版（旧版保留）");
+    else toast("模型已分析但本轮未生成/未提交新版本（旧版保留）");
+  }catch(e){ toast("分析失败："+e.message); }
+  _busy=false; $("btnAnalyze").disabled=false; $("btnAnalyze").innerHTML="▶ 运行五阶段分析（真实模型执行）";
+};
+$("btnExport").onclick = async ()=>{
+  const text = await api("/api/export");
+  download(text, "opportunity_export.txt");
+  toast("已导出本任务（txt）");
+};
+$("btnUpdate").onclick = async ()=>{
+  if(busyGuard()) return;
+  const raw = $("rawInput").value.trim();
+  if(!raw){ toast("请先在「分析输入区」粘贴本轮新增材料"); return; }
+  const sim = $("kindSel").value==="simulation";
+  setProg("补充登记…");
+  _busy=true;
+  try{
+    state = await api("/api/input", {raw_text:raw, material_kind:$("kindSel").value, user_ref:$("userRef").value.trim(), simulation:sim});
+    renderAll(); setProg("分析更新中（真实模型执行，可能较久）…");
+    $("btnUpdate").disabled=true;
+    state = await api("/api/analyze", {});
+    renderAll(); setProg(""); $("btnUpdate").disabled=false;
+    const v = state.latest_card ? (state.latest_card.version||1) : 0;
+    const r=state.run||{};
+    if(r.saved_new) toast("已基于本轮补充更新机会卡（当前 v"+v+"，旧版已保留）");
+    else if(r.status==="blocked") toast("本轮保存未成功（已达修复上限），旧版保留，本轮未提交");
+    else toast("本轮已补充登记，但未生成新版本（模型未提交更新，旧版保留）");
+    $("rawInput").value="";
+  }catch(e){ setProg(""); $("btnUpdate").disabled=false; toast("更新失败："+e.message); }
+  _busy=false;
+};
+$("btnVersions").onclick = viewVersions;
+$("btnCopy").onclick = copyResult;
+$("btnExportTask").onclick = $("btnExport").onclick;
+function setProg(s){ $("prog").textContent=s; }
+function download(text,name){
+  const b=new Blob([text],{type:"text/plain;charset=utf-8"}); const a=document.createElement("a");
+  a.href=URL.createObjectURL(b); a.download=name; document.body.appendChild(a); a.click(); a.remove();
+}
+async function exportCard(cardId){ const t=await api("/api/export/"+cardId); download(t, cardId+".txt"); toast("已导出 "+cardId); }
+async function restoreAll(){ state = await api("/api/restore", {source_id:"__all__", reason:"预览恢复真实来源"}); renderAll(); toast("已恢复真实来源（如存在排除）"); }
+
+async function openModelReply(){
+  const tid = (state.active_task||{}).task_id||"";
+  const card = state.latest_card||{};
+  const replyVersion=tid==="T-018"?1:4;
+  const resp = await api("/api/model_reply?task_id="+encodeURIComponent(tid)+"&card_id="+encodeURIComponent(card.card_id||"")+"&version="+replyVersion);
+  if(!resp || !resp.exists){
+    toast("原始模型回复暂未取得");
+    return;
+  }
+  const pre = document.createElement("div");
+  pre.style.cssText = "position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:999;display:flex;align-items:center;justify-content:center;";
+  const panel = document.createElement("div");
+  panel.style.cssText = "background:#fff;border-radius:10px;max-width:860px;width:92%;max-height:86vh;overflow:auto;padding:20px 24px;box-sizing:border-box;";
+  const note = esc(resp.note||"");
+  const body = esc(resp.content||"").replace(/\n/g,"<br>");
+  panel.innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <b>原始模型回复（v${replyVersion}）· 机会卡 ${esc(resp.card_id)}</b>
+      <button data-reply-close style="border:none;background:#eee;border-radius:6px;padding:4px 12px;cursor:pointer">关闭</button>
+    </div>
+    <div style="background:#f0f6ff;border-left:3px solid #3b82f6;padding:10px 12px;font-size:13px;margin-bottom:12px">${note}</div>
+    <div style="font-size:13px;color:#666;margin-bottom:10px">
+      取得方式：${esc(resp.acquired_from)} ｜ 关联日志：${esc(resp.related_log)} ｜ 补存时间：${esc(resp.archived_at)}
+    </div>
+    <div style="border:1px solid #ddd;border-radius:6px;padding:14px;white-space:normal;font-size:14px;line-height:1.7;background:#fafafa">${body}</div>
+    <div style="margin-top:14px;display:flex;gap:10px">
+      <button onclick="copyReplyText()" style="border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 14px;cursor:pointer">复制原文</button>
+      <button onclick="downloadReplyTxt()" style="border:1px solid #ccc;background:#fff;border-radius:6px;padding:6px 14px;cursor:pointer">下载为 TXT</button>
+    </div>`;
+  panel.querySelector("[data-reply-close]").addEventListener("click", () => pre.remove());
+  pre.appendChild(panel);
+  document.body.appendChild(pre);
+  window.__replyContent = resp.content||"";
+  window.__replyName = (resp.card_id||"OC-001")+"_model_reply_v"+replyVersion+".txt";
+  toast("已读取归档中的 v"+replyVersion+" 原始回复");
+}
+function copyReplyText(){
+  const t = window.__replyContent||"";
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(t).then(()=>toast("已复制原文")).catch(()=>fallbackCopy(t));
+  } else { fallbackCopy(t); }
+}
+function fallbackCopy(t){
+  const ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select();
+  try{ document.execCommand("copy"); toast("已复制原文"); }catch(e){ toast("复制失败"); } ta.remove();
+}
+function downloadReplyTxt(){ download(window.__replyContent||"", window.__replyName||"model_reply.txt"); toast("已下载原文"); }
+
+// init
+renderModes();
+(async()=>{ state = await api("/api/state"); if(state.active_task){ state.mode = state.active_task.mode||null; } renderModes(); renderAll(); if(state.active_task){ toast("已加载当前任务："+state.task_id+" · 模式："+mdisp(state.active_task.mode)); } })();
+</script>
+</body>
+</html>

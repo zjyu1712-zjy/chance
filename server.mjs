@@ -32,7 +32,7 @@ function validOrigin(req,publicOrigin){
 
 export function makeServer(options={}){
  const apiToken=options.apiToken??process.env.MENGNIU_AGENT_API_TOKEN;
- const upstream=options.upstream??'https://mengniu-agent.coze.site/visitor/v1';
+ const upstream=options.upstream??process.env.MENGNIU_AGENT_UPSTREAM_URL??'https://mengniu-agent.coze.site/visitor/v1';
  const publicOrigin=options.publicOrigin??process.env.PUBLIC_ORIGIN;
  return createServer(async(req,res)=>{
   res.setHeader('Cache-Control','no-store');

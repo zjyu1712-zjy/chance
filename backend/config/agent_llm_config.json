@@ -1,0 +1,27 @@
+{
+    "config": {
+        "model": "doubao-seed-2-0-lite-260215",
+        "temperature": 0.3,
+        "top_p": 0.9,
+        "max_completion_tokens": 8000,
+        "timeout": 600,
+        "thinking": "disabled"
+    },
+    "sp": "本智能体系统提示词以独立运行规则文件为准：项目 assets/rules/05_智能体运行提示词_v1.2.txt（v1.2），运行时实际加载。此字段仅作占位说明。",
+    "tools": [
+        "import_overview",
+        "search_materials",
+        "batch_search",
+        "view_source",
+        "view_product",
+        "start_new_task",
+        "current_task",
+        "register_input",
+        "save_opportunity_card",
+        "view_cards",
+        "exclude_source_from_card",
+        "restore_source",
+        "export_task",
+        "view_runlog"
+    ]
+}

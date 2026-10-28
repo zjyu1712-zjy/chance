@@ -1,0 +1,8 @@
+**/__pycache__
+.venv
+.env
+.env.*
+assets/opportunity
+*.zip
+*.log
+*.dump

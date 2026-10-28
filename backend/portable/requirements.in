@@ -1,0 +1,13 @@
+# 直接依赖版本来自扣子导出的 uv.lock；不安装未使用的桌面/办公处理依赖。
+fastapi==0.135.1
+uvicorn==0.41.0
+langchain==1.0.3
+langchain-openai==1.0.1
+langgraph==1.0.2
+coze-coding-utils==0.2.8
+SQLAlchemy==2.0.48
+python-dotenv==1.2.2
+psycopg2-binary==2.9.11
+psycopg[binary]==3.3.3
+psycopg-pool==3.3.0
+langgraph-checkpoint-postgres==3.0.4

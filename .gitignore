@@ -9,3 +9,15 @@ deployment-evidence/
 *.cookies
 *.sqlite
 *.sqlite3
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+backend/assets/opportunity/
+backend/visitor_no_model_report.json
+backend/.runtime/
+postgres-data/
+*.dump
+*.sql
+*.pem
+*.key

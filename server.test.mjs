@@ -3,6 +3,25 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import {createServer} from 'node:http';
 
+test('standalone backend address can be configured without contacting production', async t => {
+  const realFetch=globalThis.fetch;
+  t.mock.method(globalThis,'fetch',async(url,options)=>{
+    assert.ok(String(url).startsWith('http://127.0.0.1:'),'test refuses any external request');
+    return realFetch(url,options);
+  });
+  const upstream=createServer((req,res)=>{res.setHeader('Content-Type','application/json');res.end(JSON.stringify({ready:true,model_called:false}));});
+  await new Promise(r=>upstream.listen(0,'127.0.0.1',r));
+  const previous=process.env.MENGNIU_AGENT_UPSTREAM_URL;
+  process.env.MENGNIU_AGENT_UPSTREAM_URL=`http://127.0.0.1:${upstream.address().port}/visitor/v1`;
+  const {makeServer}=await import('./server.mjs');
+  const app=makeServer({apiToken:'test-only-not-live'});
+  await new Promise(r=>app.listen(0,'127.0.0.1',r));
+  t.after(()=>{if(previous===undefined)delete process.env.MENGNIU_AGENT_UPSTREAM_URL;else process.env.MENGNIU_AGENT_UPSTREAM_URL=previous;app.closeAllConnections();app.close();upstream.closeAllConnections();upstream.close();});
+  const r=await fetch(`http://127.0.0.1:${app.address().port}/api/bridge`);
+  assert.equal(r.status,200,'configured standalone health endpoint must be used');
+  assert.equal((await r.json()).model_called,false);
+});
+
 test('Coze bridge exists and preserves the public contract without model calls', async t => {
   const exists = await fs.access(new URL('./server.mjs',import.meta.url)).then(()=>true,()=>false);
   assert.ok(exists,'Coze-compatible HTTP bridge has not been implemented');
